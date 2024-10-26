@@ -5,12 +5,13 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { protect } = require('../middlewares/authMiddleware');
 
 router.post('/create-payment-intent', protect, async (req, res) => {
-    const { amount } = req.body;
+    const { amount, orderId } = req.body;
 
     try {
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Math.round(amount),
             currency: 'eur',
+            metadata: { orderId: orderId },
         });
         res.send({
             clientSecret: paymentIntent.client_secret,

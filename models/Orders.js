@@ -1,3 +1,4 @@
+// models/Order.js
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema(
@@ -32,11 +33,16 @@ const orderSchema = new mongoose.Schema(
     estado: {
       type: String,
       enum: ['pendiente', 'completado', 'cancelado'],
-      default: 'completado',
+      default: 'pendiente',
+    },
+    shippingInfo: {
+      nombre: { type: String, required: true },
+      direccion: { type: String, required: true },
+      ciudad: { type: String, required: true },
+      codigoPostal: { type: String, required: true },
     },
     fechaPago: {
       type: Date,
-      default: Date.now,
     },
   },
   { timestamps: true }
